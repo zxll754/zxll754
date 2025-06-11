@@ -23,6 +23,7 @@
     }
     main {
       padding: 1em;
+      display: none;
     }
     section {
       margin-bottom: 2em;
@@ -73,14 +74,27 @@
   </main>
 
   <script>
+    let password = sessionStorage.getItem("password");
+    if (password !== "960913") {
+      password = prompt("請輸入進入密碼：");
+      if (password === "960913") {
+        sessionStorage.setItem("password", password);
+      } else {
+        alert("密碼錯誤，請重新整理頁面再試一次。❌");
+        throw new Error("密碼錯誤");
+      }
+    }
+
     let nickname = localStorage.getItem("nickname");
     if (!nickname) {
-      nickname = prompt("請輸入你的暱稱：");
+      nickname = prompt("歡迎進入我們的小天地！請輸入你的暱稱：");
       if (!nickname || nickname.trim() === "") {
         nickname = "匿名小花";
       }
       localStorage.setItem("nickname", nickname);
     }
+
+    document.querySelector("main").style.display = "block";
 
     function addMessage() {
       const input = document.getElementById("messageInput");
